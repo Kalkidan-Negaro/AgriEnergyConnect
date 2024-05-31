@@ -1,0 +1,93 @@
+﻿@model AgriEnergyConnect.Models.Farmer
+@{
+    ViewData["Title"] = "Register Farmer";
+}
+
+<style>
+  
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #343a40;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.2rem;
+    }
+
+    .back-btn {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+        .back-btn a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 1rem;
+        }
+</style>
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
+    <hr />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <form method="post">
+        <div class="form-group">
+            <label for="Name">Name:</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="ContactInfo">Contact Info:</label>
+            <input asp-for="ContactInfo" class="form-control" />
+            <span asp-validation-for="ContactInfo" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="Address">Address:</label>
+            <textarea asp-for="Address" class="form-control"></textarea>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @ViewBag.Message
+        </div>
+    }
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Error
+        </div>
+    }
+
+    <div class="back-btn">
+        <a href="@Url.Action("Index", "EmployeeDashboard")"></a>
+    </div>
+</div>

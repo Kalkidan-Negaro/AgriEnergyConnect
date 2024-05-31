@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "Farmer Dashboard";
+}
+
+<h1>Farmer Dashboard</h1>
+
+<p>
+    <a asp-action="AddProduct" class="btn btn-primary">Add Product</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Production Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Category</td>
+                <td>@(product.ProductionDate.ToString("dd-MM-yyyy"))</td>
+            </tr>
+        }
+    </tbody>
+</table>

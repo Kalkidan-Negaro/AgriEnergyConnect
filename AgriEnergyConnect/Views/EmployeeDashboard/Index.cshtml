@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Employee Dashboard";
+}
+
+<style>
+    
+    .dashboard-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+        .dashboard-container h2 {
+            margin-bottom: 30px;
+            color: #343a40;
+        }
+
+    .btn-primary {
+        margin: 10px;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+    }
+</style>
+
+<div class="dashboard-container">
+    <h2>@ViewData["Title"]</h2>
+
+    <div>
+        <a href="@Url.Action("RegisterFarmer", "EmployeeDashboard")" class="btn btn-primary">Add Farmer</a>
+        <a href="@Url.Action("Search", "EmployeeDashboard")" class="btn btn-primary">Search Products</a>
+    </div>
+</div>
