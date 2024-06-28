@@ -2,7 +2,9 @@
 
 @{
     ViewData["Title"] = "Login";
-}<style>
+}
+
+<style>
     body {
         background-color: #f8f9fa;
         font-family: Arial, sans-serif;
@@ -17,23 +19,43 @@
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
 
-    .login-container h4 {
-        text-align: center;
-        margin-bottom: 30px;
-    }
+        .login-container h4 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #343a40; /* Dark gray */
+        }
 
-    .login-container h5 {
-        margin-bottom: 20px;
-        color: #343a40;
-        text-align: center;
-    }
+        .login-container h5 {
+            margin-bottom: 20px;
+            color: #343a40; /* Dark gray */
+            text-align: center;
+        }
 
     .form-group {
         margin-bottom: 20px;
     }
 
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+    }
+
     .btn-primary {
         width: 100%;
+        padding: 10px 20px;
+        font-size: 1rem;
+        background-color: #1b5e20; /* Dark green */
+        border-color: #1b5e20; /* Dark green */
+    }
+
+        .btn-primary:hover {
+            background-color: #113d15; /* Darker shade of green on hover */
+            border-color: #113d15; /* Darker shade of green on hover */
+        }
+
+    .text-danger {
+        color: #dc3545; /* Bootstrap's default danger color */
     }
 
     .alert {
@@ -49,66 +71,58 @@
         flex: 0 0 48%;
         max-width: 48%;
     }
-
-    
-
-        .col-md-6 {
-            max-width: 100%;
-            margin-bottom: 20px;
-        }
-    }
 </style>
 
 <div class="login-container">
+    <h4>Login</h4>
 
-<h4>Login</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <h5>Employee Login</h5>
+            <form asp-action="EmployeeLogin" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" type="password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Employee Login" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h5>Farmer Login</h5>
+            <form asp-action="FarmerLogin" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" type="password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Farmer Login" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
 
-<div class="row">
-    <div class="col-md-6">
-        <h5>Employee Login</h5>
-        <form asp-action="EmployeeLogin" method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" type="password" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Employee Login" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-    <div class="col-md-6">
-        <h5>Farmer Login</h5>
-        <form asp-action="FarmerLogin" method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" type="password" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Farmer Login" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+    @if (ViewBag.LoginError != null)
+    {
+        <div class="alert alert-danger">@ViewBag.LoginError</div>
+    }
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
 </div>
-
-@if (ViewBag.LoginError != null)
-{
-    <div class="alert alert-danger">@ViewBag.LoginError</div>
-}
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

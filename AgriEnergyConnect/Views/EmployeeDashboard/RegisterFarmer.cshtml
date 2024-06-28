@@ -4,7 +4,11 @@
 }
 
 <style>
-  
+    body {
+        background-color: #f8f9fa;
+        font-family: Arial, sans-serif;
+    }
+
     .container {
         max-width: 600px;
         margin: 50px auto;
@@ -34,7 +38,15 @@
         width: 100%;
         padding: 15px;
         font-size: 1.2rem;
+        background-color: #006600;
+        border-color: #006600;
+        color: #ffffff;
     }
+
+        .btn-primary:hover {
+            background-color: #005500;
+            border-color: #005500;
+        }
 
     .back-btn {
         margin-top: 20px;
@@ -43,9 +55,17 @@
 
         .back-btn a {
             text-decoration: none;
-            color: #007bff;
+            color: #cc6600;
             font-size: 1rem;
         }
+
+            .back-btn a:hover {
+                color: #bb5500;
+            }
+
+    .alert {
+        margin-top: 20px;
+    }
 </style>
 
 <div class="container">
@@ -70,6 +90,11 @@
             <textarea asp-for="Address" class="form-control"></textarea>
             <span asp-validation-for="Address" class="text-danger"></span>
         </div>
+        <div class="form-group">
+            <label for="Password">Password:</label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
         <button type="submit" class="btn btn-primary">Register</button>
     </form>
 
@@ -88,6 +113,6 @@
     }
 
     <div class="back-btn">
-        <a href="@Url.Action("Index", "EmployeeDashboard")"></a>
+        <a href="@Url.Action("Index", "EmployeeDashboard")">Back to Dashboard</a>
     </div>
 </div>

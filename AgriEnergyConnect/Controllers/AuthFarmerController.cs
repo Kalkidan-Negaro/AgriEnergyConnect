@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgriEnergyConnect.Models;
 using System.Threading.Tasks;
-using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.AspNetCore.Authorization;
 
 namespace AgriEnergyConnect.Controllers
 {
@@ -42,17 +41,19 @@ namespace AgriEnergyConnect.Controllers
                     return View(farmer);
                 }
 
-                string password = _passwordService.GenerateRandomPassword(12, true);
+                // Hash the password
                 byte[] salt = _passwordService.GenerateSalt();
-                string passwordWithSalt = password + Convert.ToBase64String(salt);
-                string hashedPassword = _passwordService.HashPassword(passwordWithSalt);
-                farmer.PasswordHash = hashedPassword;
+                string passwordWithSalt = farmer.Password + Convert.ToBase64String(salt);
+                farmer.PasswordHash = _passwordService.HashPassword(passwordWithSalt);
+
+                // Optionally clear the plain text password
+                farmer.Password = null;
 
                 _context.Farmers.Add(farmer);
                 await _context.SaveChangesAsync();
 
-                ViewBag.Message = $"Farmer {farmer.Name} added successfully. Auto-generated password (masked): {_passwordService.MaskPassword(password)}";
-                return RedirectToAction("Index", "Home");
+                ViewBag.Message = $"Farmer {farmer.Name} added successfully.";
+                return RedirectToAction("Index", "EmployeeDashboard");
             }
 
             return View(farmer);
@@ -62,21 +63,6 @@ namespace AgriEnergyConnect.Controllers
 
 public class PasswordService
 {
-    private readonly string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-
-    public string GenerateRandomPassword(int length, bool includeSpecialChars = false)
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        Random random = new Random();
-
-        for (int i = 0; i < length; i++)
-        {
-            stringBuilder.Append(validChars[random.Next(validChars.Length)]);
-        }
-
-        return stringBuilder.ToString();
-    }
-
     public byte[] GenerateSalt()
     {
         byte[] salt = new byte[16];
@@ -102,10 +88,5 @@ public class PasswordService
 
             return stringBuilder.ToString();
         }
-    }
-
-    public string MaskPassword(string password)
-    {
-        return password.Length > 2 ? password[0] + new string('*', password.Length - 2) + password[password.Length - 1] : password;
     }
 }

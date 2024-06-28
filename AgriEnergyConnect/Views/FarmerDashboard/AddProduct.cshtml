@@ -4,36 +4,64 @@
     ViewData["Title"] = "Add Product";
 }
 
-<h1>Add Product</h1>
+<h1 style="color: #343a40;">Add Product</h1>
 
 <hr />
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 <form asp-action="AddProduct" method="post">
     <div class="form-group">
-        <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" />
+        <label asp-for="Name" class="control-label" style="color: #343a40;"></label>
+        <input asp-for="Name" class="form-control" style="border-color: #006600;" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Category" class="control-label"></label>
-        <input asp-for="Category" class="form-control" />
+        <label asp-for="Category" class="control-label" style="color: #343a40;"></label>
+        <input asp-for="Category" class="form-control" style="border-color: #006600;" />
         <span asp-validation-for="Category" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="ProductionDate" class="control-label"></label>
-        <input asp-for="ProductionDate" class="form-control" id="ProductionDate" />
+        <label asp-for="ProductionDate" class="control-label" style="color: #343a40;"></label>
+        <input asp-for="ProductionDate" class="form-control" id="ProductionDate" style="border-color: #006600;" />
         <span asp-validation-for="ProductionDate" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Add Product</button>
+    <button type="submit" class="btn btn-primary" style="background-color: #006600; border-color: #006600;">Add Product</button>
 </form>
 
 @section Scripts {
     <script>
-        $(function() {
+        $(function () {
             $("#ProductionDate").datepicker({
                 dateFormat: "dd-mm-yy"
             });
         });
     </script>
 }
+
+<style>
+    body {
+        background-color: #f8f9fa; 
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        padding: 10px 20px;
+        font-size: 1rem;
+        color: white;
+    }
+</style>

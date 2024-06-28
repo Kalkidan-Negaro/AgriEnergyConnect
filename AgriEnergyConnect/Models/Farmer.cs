@@ -26,5 +26,9 @@ public partial class Farmer
 
     [InverseProperty("Farmer")]
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
-    public string PasswordHash { get; internal set; }
+    [Required]
+    [DataType(DataType.Password)]
+    public string Password { get; set; }
+
+    public string PasswordHash { get; set; }
 }

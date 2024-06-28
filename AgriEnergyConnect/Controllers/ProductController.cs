@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace AgriEnergyConnect.Controllers
 {
@@ -11,19 +12,25 @@ namespace AgriEnergyConnect.Controllers
     public class ProductController : Controller
     {
         private readonly AgriEnergyConnectContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ProductController(AgriEnergyConnectContext context)
+        public ProductController(AgriEnergyConnectContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IActionResult> Dashboard()
         {
-            int farmerId = (int)HttpContext.Session.GetInt32("UserID");
+           
+            int farmerId = (int)_httpContextAccessor.HttpContext.Session.GetInt32("UserID");
+
+            // Query products where FarmerID matches the logged-in farmer's ID
             var products = await _context.Products
                                          .Where(p => p.FarmerID == farmerId)
                                          .OrderBy(p => p.Name)
                                          .ToListAsync();
+
             return View(products);
         }
 
@@ -39,10 +46,17 @@ namespace AgriEnergyConnect.Controllers
         {
             if (ModelState.IsValid)
             {
-                int farmerId = (int)HttpContext.Session.GetInt32("UserID");
+                // Retrieve FarmerID from session
+                int farmerId = (int)_httpContextAccessor.HttpContext.Session.GetInt32("UserID");
+
+                // Assign FarmerID to the new product
                 product.FarmerID = farmerId;
+
+                // Add product to context and save changes
                 _context.Add(product);
                 await _context.SaveChangesAsync();
+
+                // Redirect to the Dashboard action
                 return RedirectToAction(nameof(Dashboard));
             }
 
